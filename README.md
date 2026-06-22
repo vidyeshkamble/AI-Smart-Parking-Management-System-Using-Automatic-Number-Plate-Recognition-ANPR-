@@ -1,0 +1,2 @@
+# AI-Smart-Parking-Management-System-Using-Automatic-Number-Plate-Recognition-ANPR-
+AI Smart Parking Management System is an AI-powered parking solution that detects vehicle number plates using cameras and ANPR technology. Entry details are stored in a database. On exit, the system calculates parking duration, generates a QR code for payment, verifies the transaction, and automatically opens the gate for seamless vehicle access.
