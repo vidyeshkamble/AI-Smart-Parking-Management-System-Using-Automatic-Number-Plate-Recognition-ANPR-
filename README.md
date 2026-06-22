@@ -37,4 +37,9 @@ After successful payment verification, the Python-based backend updates the park
 * **ESP32/Arduino (Gate Automation)**
 * **HTML, CSS, JavaScript**
 
+<img width="402" height="332" alt="Screenshot 2026-06-22 204753" src="https://github.com/user-attachments/assets/cd3c43ac-c10b-48d9-8a59-339799d9fb08" />
 <img width="740" height="1600" alt="PhoneInterface" src="https://github.com/user-attachments/assets/23650d5e-781c-477c-9901-8eebba7b1efb" />
+<img width="1913" height="1080" alt="Screenshot 2026-06-22 204813" src="https://github.com/user-attachments/assets/db2cdfed-c67a-44fd-a27f-c44853e8e53e" />
+
+
+
