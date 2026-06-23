@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parking Bills</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Parking Bills</h2>
+        {% for bill in bills %}
+        <div class="card" onclick="openBill('{{ bill[0] }}')">
+            <div class="left">
+                <h3>{{ bill[5] }}</h3>
+                <p><b>In Time:</b> {{ bill[6] }}</p>
+                <p><b>Out Time:</b> {{ bill[4] }}</p>
+                <p><b>Duration:</b> {{ bill[6] }}</p>
+            </div>
+            <div class="right">
+                <h3>₹ {{ bill[2] }} /-</h3>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    window.openBill = function (billId) {
+
+        // Save for later use
+        localStorage.setItem("bill_id", billId);
+
+        // Fetch order from backend
+        fetch(`/create_order/${billId}`)
+            .then(res => res.json())
+            .then(data => {
+
+                const options = {
+                    key: data.key_id,
+                    amount: data.amount,
+                    currency: "INR",
+                    name: "Parking System",
+                    description: "Bill Payment",
+                    order_id: data.order_id,
+
+                    handler: function (response) {
+
+                        // Prepare POST data
+                        const payload = {
+                            razorpay_order_id: response.razorpay_order_id,
+                            razorpay_payment_id: response.razorpay_payment_id,
+                            razorpay_signature: response.razorpay_signature,
+                            bill_id: localStorage.getItem("bill_id")   // IMPORTANT
+                        };
+
+                        // Send data to backend
+                        fetch("/payment_success", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                            body: new URLSearchParams(payload)
+                        })
+                        .then(res => res.json())
+                        .then(result => {
+                            alert("Payment Status: " + result.status);
+                        });
+                    }
+                };
+
+                const rzp = new Razorpay(options);
+                rzp.open();
+            });
+    };
+
+});
+</script>
+
+
+
+</html>
